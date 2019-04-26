@@ -1,0 +1,29 @@
+1 = rock
+2 = paper
+3 = scissors
+0 = no input
+
+MUST:
+
+be built in flask
+show wins/losses
+use an ML algorithm
+prove it's not peeking
+
+STRATEGY:
+
+https://motherboard.vice.com/en_us/article/gvym4x/game-theory-rock-paper-scissors
+
+humans tend to repeat their successful strategies 
+
+losers try to change their tactics
+
+statistically scissors wins on first move the most (maybe max knows this??? make the bot check)
+
+1: if opponent plays rock and wins (against scissors), he's more likely to play rock again. 
+    so prefer to play the unplayed option (paper)
+
+2: mirror. if bot wins, play the opponent's move
+
+declare what you are going to play and tell the truth.
+  -> maybe randomize? or take into account what max did when we did this
