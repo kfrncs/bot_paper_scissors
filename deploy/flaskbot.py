@@ -12,8 +12,7 @@ app = flask.Flask(__name__)
 # This method takes input via an HTML page
 @app.route('/page')
 def page():
-   with open("page.html", 'r') as page:
-       return page.read()
+    return flask.render_template('page.html')
 
 @app.route('/result', methods=['POST', 'GET'])
 def result():
