@@ -25,6 +25,8 @@ df['ID'] = ID
 df['p1'] = p1
 df['p2'] = p2
 
+move_dict = {1: 'rock', 2: 'paper', 3: 'scissors'}
+
 def game(player_move):
     computer_move = np.random.randint(1,4)
     ID.append(len(p1))
@@ -36,6 +38,7 @@ def game(player_move):
     return computer_move
 
 def win_check(player_move, computer_move):
+    global player_wins, computer_wins, amount_games
     if player_move == computer_move:
         draws += 1
         last_win = 'Nobody'
@@ -82,7 +85,14 @@ def result():
 
         # pred = pipe.predict(data)[0]
         # results = {'quality': round(pred, 1)}
-        return flask.render_template('in_play.html', tables=[df.to_html(classes='data')], titles=df.columns.values, player_move=player_move, computer_move=computer_move)
+        return flask.render_template('in_play.html',    # render on template
+                tables=[df.to_html(classes='data')],    # df values
+                titles=df.columns.values,               # df column titles
+                player_move=move_dict[int(player_move)],      # player move in a word
+                computer_move=move_dict[int(computer_move)],  # computer move in a word
+                player_wins=player_wins,        # count player wins
+                computer_wins=computer_wins,    # count computer wins
+                amount_games=amount_games)      # count games played
         #f'player move is {player_move}, the bot chose {computer_move}'
         #return flask.jsonify(results)
 

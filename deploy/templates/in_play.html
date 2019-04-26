@@ -17,6 +17,9 @@
 
       {% if player_move %}
       <p>Your move was {{ player_move }}. The Bot chose {{ computer_move }} </p>
+      <p>Player wins: {{ player_wins }}</p>
+      <p>Computer wins: {{ computer_wins }}</p>
+      <p>Total games: {{ amount_games }}</p>
       {% else %}
         <p>Something went wrong. Last move not found.</p>
       {% endif %}
