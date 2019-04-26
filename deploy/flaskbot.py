@@ -33,6 +33,7 @@ def game(player_move):
     for i in range(0,len(df)+1):
         df.loc[i] = [ID[i],p1[i],p2[i]]
     win_check(player_move, computer_move)
+    return computer_move
 
 def win_check(player_move, computer_move):
     if player_move == computer_move:
@@ -74,7 +75,7 @@ def result():
     if flask.request.method == 'POST':
 
         player_move = flask.request.form['player_move']
-        game(player_move)
+        computer_move = game(player_move)
 
 #        data = pd.DataFrame([{
 #            'grape': grape}])
