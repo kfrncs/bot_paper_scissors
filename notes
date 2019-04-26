@@ -1,3 +1,10 @@
+TODO:
+
+rename columns to fit p1, p2
+drop game_round from training df & dummy
+
+
+
 1 = rock
 2 = paper
 3 = scissors
