@@ -9,6 +9,8 @@ app = flask.Flask(__name__)
 
 #-------- ROUTES GO HERE -----------#
 
+dummy = pd.read_csv('../data/dummy.csv')
+
 # This method takes input via an HTML page
 @app.route('/page')
 def page():
@@ -28,7 +30,8 @@ def result():
 
         # pred = pipe.predict(data)[0]
         # results = {'quality': round(pred, 1)}
-        return f'player move is {player_move}, the bot chose {computer_move}'
+        return flask.render_template('in_play.html', tables=[dummy.to_html(classes='data')], titles=dummy.columns.values, player_move=player_move, computer_move=computer_move)
+        #f'player move is {player_move}, the bot chose {computer_move}'
         #return flask.jsonify(results)
 
 if __name__ == '__main__':
