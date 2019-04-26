@@ -30,17 +30,6 @@ def result():
         return f'player move is {player_move}'
         #return flask.jsonify(results)
 
-@app.route('/predict', methods=["GET"])
-def predict():
-    grape = flask.request.args['grape']
-
-    data = pd.DataFrame([{
-        'grape': grape}])
-
-    # pred = pipe.predict(data)[0]
-    # results = {'quality': round(pred, 1)}
-    return None
-
 if __name__ == '__main__':
     HOST = '127.0.0.1'
     PORT = 4000
