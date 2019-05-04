@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
 
@@ -51,18 +51,52 @@ X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.33, rando
 
 # RANDOM FORESTS
 rf = RandomForestClassifier()
+print("training RandomForestClassifier")
 rf.fit(X_train, y_train)
 print('random forest train score: ', rf.score(X_train, y_train))
 print('random forest test score: ', rf.score(X_test, y_test))
 
 # CATBOOST
 cb = CatBoostClassifier()
+print("training CatBoostClassifier")
 cb.fit(X_train, y_train, plot=False, logging_level='Silent')
 print('catboost score on train: ', cb.score(X_train, y_train))
 print('catboost score on test: ', cb.score(X_test, y_test))
 
 # KNeighbors
 kn = KNeighborsClassifier()
+print("training KNeighborsClassifier")
 kn.fit(X_train, y_train)
 print('K neighbours score on train: ', kn.score(X_train, y_train))
 print('K neighbours on test: ', kn.score(X_test, y_test))
+
+# defining variables for CrossValidation
+n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
+max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+bootstrap = [True, False]
+random_grid = {'n_estimators': n_estimators,
+               'max_depth': max_depth,
+               'bootstrap': bootstrap}
+
+rf_random = RandomizedSearchCV(estimator = rf,
+                               param_distributions = random_grid,
+                               n_iter = 50,
+                               cv = 3,
+                               verbose=2,
+                               random_state=42)
+
+# commented out to save time
+# rf_random.fit(X_train, y_train)
+
+# {'n_estimators': 800, 'max_depth': 10, 'bootstrap': False}
+# rf_random.best_params_
+
+# RANDOM FORESTS REDUX
+# increases score to 39.5% from ~37%
+rf = RandomForestClassifier(n_estimators=800,
+                            max_depth=10,
+                            bootstrap=False)
+print("retraining RandomForestClassifier")
+rf.fit(X_train, y_train)
+print('random forest train score: ', rf.score(X_train, y_train))
+print('random forest test score: ', rf.score(X_test, y_test))
