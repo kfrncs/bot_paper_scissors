@@ -1,9 +1,14 @@
+# ignore future warnings
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 # ML imports
 import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
 
 # load rock paper scissors game history data
@@ -40,3 +45,24 @@ df.drop('y', inplace=True, axis=1)
 df.index = (range(0, len(df)))
 
 df.sample(3)
+
+# train test split
+X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.33, random_state=42)
+
+# RANDOM FORESTS
+rf = RandomForestClassifier()
+rf.fit(X_train, y_train)
+print('random forest train score: ', rf.score(X_train, y_train))
+print('random forest test score: ', rf.score(X_test, y_test))
+
+# CATBOOST
+cb = CatBoostClassifier()
+cb.fit(X_train, y_train, plot=False, logging_level='Silent')
+print('catboost score on train: ', cb.score(X_train, y_train))
+print('catboost score on test: ', cb.score(X_test, y_test))
+
+# KNeighbors
+kn = KNeighborsClassifier()
+kn.fit(X_train, y_train)
+print('K neighbours score on train: ', kn.score(X_train, y_train))
+print('K neighbours on test: ', kn.score(X_test, y_test))
