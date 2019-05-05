@@ -1,9 +1,12 @@
 # third, random bot
 import random
+import joblib
 
 class KenBot:
-    def __init__(self):
+    def __init__(self, model_joblib):
         self.history = {'player': [], 'bot': []}
+        self.model = joblib.load(model_joblib)
+        self.game_count = 0
 
     def capture(self, y):
         self.history['player'].append(y)
@@ -14,6 +17,6 @@ class KenBot:
         return y
 
     def throw(self, y):
-        x = self.predict()
+        x = self.model.predict(y)
         self.capture(y)
         return x
