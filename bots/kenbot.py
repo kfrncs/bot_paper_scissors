@@ -1,7 +1,7 @@
 # third, random bot
 import random
 
-class EpsilonBot:
+class KenBot:
     def __init__(self):
         self.history = {'player': [], 'bot': []}
 
