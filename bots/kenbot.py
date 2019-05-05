@@ -35,13 +35,30 @@ class KenBot:
             # x = bot.throw(results)
             pass
         else:
-            #TODO:
-            # append this turn to the DF created
+            x = random.choice([1, 2, 3])
+            self.history['bot'].append(x)
+            self.append_turn()
             # print(bot.df)
             # x = bot.predict(bot.df) #
             pass
         self.game_count += 1
+
         return x
+
+    def append_turn(self):
+        self.df.append({
+            'player_one_throw': self.history['player'][-1],
+            'p1_-1': self.history['player'][-2],
+            'p1_-2': self.history['player'][-3],
+            'p1_-3': self.history['player'][-4],
+            'p1_-4': self.history['player'][-5],
+            'p1_-5': self.history['player'][-5],
+            'p2_last': self.history['bot'][-2]
+        }, ignore_index=True)
+
+        # this is just for testing! probably remove me 
+        self.df.to_csv('data/test.csv', index=False)
+        return self
 
     def create_df(self):
         print(f"length bot: ", len(self.history['bot']))
@@ -52,7 +69,6 @@ class KenBot:
             'p2_last': self.history['bot'] # bot's last turn.. almost
         })
 
-
         # make p2_last last turn instead of current
         self.df['p2_last'] = self.df['p2_last'].shift(1)
 
@@ -60,6 +76,7 @@ class KenBot:
         for i in range(1,6):
             self.df[f'p1_-{i}'] = self.df['player_one_throw'].shift(i)
 
+        # reorder columns
         self.df = self.df[['player_one_throw',
                            'p1_-1',
                            'p1_-2',

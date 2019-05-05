@@ -103,4 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# created by bot_paper_scissors
 catboost_info/
+data/test.csv
