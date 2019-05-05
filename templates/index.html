@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>RPSBOT 3001</title>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+    <br>
+      <p>choose wisely...</p>
+      <!-- https://stackoverflow.com/a/19794878/3731467 -->
+      <form method="POST" action="/">
+        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="🗿">
+        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="📜">
+        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="✂️">
+      </form>
+    </div>
+
+    {% if game %}
+    <br>
+    <div class="container-fluid">
+      <p>you chose: <font color="red">{{ game['player'] }}</font></p>
+      <p>the AI chose: <font color="orange">{{ game['bot'] }}</font></p>
+      <p>outcome: <font color="blue">{{ game['result'] }}</font></p>
+    </div>
+    {% endif %}
+
+  </body>
+</html>
