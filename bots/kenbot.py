@@ -9,7 +9,7 @@ class KenBot:
         self.history['player'].append(y)
 
     def predict(self):
-        y = random.choice(['rock', 'paper', 'scissors'])
+        y = random.choice([1, 2, 3])
         self.history['bot'].append(y)
         return y
 

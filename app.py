@@ -8,7 +8,7 @@ from utils import emoji_to_num, evaluate
 from bots.kenbot import KenBot 
 
 app = Flask(__name__)
-kenbot = KenBot()
+bot = KenBot()
 # read blank.csv as template for game data
 results = pd.read_csv('data/blank.csv')
 
@@ -23,7 +23,8 @@ def index():
         player_throw = emoji_to_num(request.form['player_throw'])
         bot_throw = bot.throw(player_throw) # replace me
         result = evaluate(player_throw, bot_throw)
-        results.append(result)
+        # TODO: append results to dataframe
+        # results.append(result)
         game['result'] = result
         game['player'] = player_throw
         game['bot'] = bot_throw
