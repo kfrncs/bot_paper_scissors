@@ -2,6 +2,9 @@
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+# joblib to save the model
+import joblib
+
 # ML imports
 import pandas as pd
 import numpy as np
@@ -44,8 +47,6 @@ df.drop('y', inplace=True, axis=1)
 # renumber index rows to prevent our model from learning from those
 df.index = (range(0, len(df)))
 
-df.sample(3)
-
 # train test split
 X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.33, random_state=42)
 
@@ -85,9 +86,10 @@ rf_random = RandomizedSearchCV(estimator = rf,
                                verbose=2,
                                random_state=42)
 
-# commented out to save time
+# commented out to save time on next run
 # rf_random.fit(X_train, y_train)
 
+# but these were the results:
 # {'n_estimators': 800, 'max_depth': 10, 'bootstrap': False}
 # rf_random.best_params_
 
@@ -100,3 +102,9 @@ print("retraining RandomForestClassifier")
 rf.fit(X_train, y_train)
 print('random forest train score: ', rf.score(X_train, y_train))
 print('random forest test score: ', rf.score(X_test, y_test))
+
+print("saving model to rock_paper_forests.joblib")
+joblib.dump(rf, 'rock_paper_forests.joblib')
+
+print("saving clean dataframe")
+df.to_csv('data/rock_paper_clean.csv', index=False)
