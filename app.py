@@ -45,7 +45,7 @@ def index():
             game['win_pct'] = game['wins'] / (game['wins'] + game['ties'])
         else:
             game['win_pct'] = 0
-            
+
         game['results'] = result
         game['player'] = num_to_words(player_throw)
         game['bot'] = num_to_words(bot_throw)

@@ -25,10 +25,10 @@
     <br>
     <div class="container-fluid">
       <p>you chose: <font color="red">{{ game['player'] }}</font></p>
-      <p>the AI chose: {{ game['bot'] }}</p>
-      <p>outcome: {{ game['results'] }}</p>
+      <p>the AI chose: <font color='gray'>{{ game['bot'] }}</font></p>
+      <p>outcome: <font color="blue"> {{ game['results'] }} </font></p>
       <br>
-      <p>wins: <font color="blue">{{ game['wins'] }}</font></p>
+      <p>wins: <font color="green">{{ game['wins'] }}</font></p>
       <p>losses: <font color="red">{{ game['losses'] }}</font></p>
       <p>ties: <font color="blue">{{ game['ties'] }}</font></p>
     </div>
