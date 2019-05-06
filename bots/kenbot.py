@@ -8,14 +8,23 @@ class KenBot:
         self.history = {'player': [], 'bot': []}
         self.model = joblib.load(model_joblib)
         self.game_count = 0
+        self.win_dict = {
+            1: 2,
+            2: 3,
+            3: 1
+        }
 
     def capture(self, y):
         self.history['player'].append(y)
         pass
 
     def predict(self):
-        y = random.choice([1, 2, 3])
-        self.history['bot'].append(y)
+        print(f'predicting on {self.df}')
+        y = self.model.predict(self.df)
+        y = y[-1]
+        print(f"y is {y}")
+        # y = self.win_dict[y[0]]
+        # print(f"y after win_dict is {y}")
         return y
 
     def throw(self):
@@ -26,16 +35,14 @@ class KenBot:
             self.history['bot'].append(x)
             pass
         elif self.game_count == 10:
-            # TODO: this is where we will create the past five turns df
-
             x = random.choice([1, 2, 3])
             self.history['bot'].append(x)
             self.create_df()
             print('dataframe created')
-            # x = bot.throw(results)
             pass
         else:
-            x = random.choice([1, 2, 3])
+            print('Game count: ', self.game_count)
+            x = self.predict()
             self.history['bot'].append(x)
             self.append_turn()
             # print(bot.df)
@@ -46,7 +53,7 @@ class KenBot:
         return x
 
     def append_turn(self):
-        self.df.append({
+        append_df = pd.DataFrame({
             'player_one_throw': self.history['player'][-1],
             'p1_-1': self.history['player'][-2],
             'p1_-2': self.history['player'][-3],
@@ -54,9 +61,14 @@ class KenBot:
             'p1_-4': self.history['player'][-5],
             'p1_-5': self.history['player'][-5],
             'p2_last': self.history['bot'][-2]
-        }, ignore_index=True)
+        }, index=[self.game_count])
+        print('append df: ', append_df)
+        # df[f'p1_-{i}'] = df.groupby('game_id')['player_one_throw'].shift(i)
 
-        # this is just for testing! probably remove me 
+        self.df = self.df.append(append_df, ignore_index=True)
+
+
+        # this is just for testing! probably remove me
         self.df.to_csv('data/test.csv', index=False)
         return self
 
@@ -86,7 +98,7 @@ class KenBot:
                            'p2_last']]
 
         # and drop the first row (it doesn't have a p2_last)
-        self.df = self.df.drop(range(0,4))
+        self.df = self.df.drop(range(0,5))
 
 
         return self

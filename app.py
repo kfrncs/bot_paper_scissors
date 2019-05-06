@@ -20,16 +20,15 @@ def index():
     if request.method == 'POST':
 
         player_throw = emoji_to_num(request.form['player_throw'])
-        bot.history['player'].append(player_throw)
-
+        bot.capture(player_throw)
         bot_throw = bot.throw()
 
-        result = evaluate(player_throw, bot_throw)
+        # result = evaluate(player_throw, bot_throw)
 
         # TODO: append results to dataframe
         # results.append(result)
 
-        game['results'] = result
+        # game['results'] = result
         game['player'] = player_throw
         game['bot'] = bot_throw
     return render_template('index.html', game=game)

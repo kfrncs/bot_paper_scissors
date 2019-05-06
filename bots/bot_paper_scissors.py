@@ -1,3 +1,20 @@
+'''
+outputs (if uncommented):
+
+training RandomForestClassifier
+random forest train score:  0.46760831532365954
+random forest test score:  0.3773831287542439
+training CatBoostClassifier
+catboost score on train:  0.3360090562930946
+catboost score on test:  0.3384695743013842
+training KNeighborsClassifier
+K neighbours score on train:  0.4161006483482556
+K neighbours on test:  0.36124314442413163
+retraining RandomForestClassifier
+random forest train score:  0.45294329525573734
+random forest test score:  0.3945677722642988
+'''
+
 # ignore future warnings
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -15,7 +32,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
 
 # load rock paper scissors game history data
-df = pd.read_csv('data/rock_paper.csv')
+df = pd.read_csv('../data/rock_paper.csv')
 
 # store last 5 turns by player 1 in separate columns
 for i in range(1,6):
@@ -41,7 +58,7 @@ df.drop('game_round_id', inplace=True, axis=1)
 df.dropna(inplace=True)
 
 # store target values separately
-y = df['y']
+y = df['y'].copy()
 df.drop('y', inplace=True, axis=1)
 
 # renumber index rows to prevent our model from learning from those
@@ -51,40 +68,40 @@ df.index = (range(0, len(df)))
 X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.33, random_state=42)
 
 # RANDOM FORESTS
-rf = RandomForestClassifier()
-print("training RandomForestClassifier")
-rf.fit(X_train, y_train)
-print('random forest train score: ', rf.score(X_train, y_train))
-print('random forest test score: ', rf.score(X_test, y_test))
+# rf = RandomForestClassifier()
+# print("training RandomForestClassifier")
+# rf.fit(X_train, y_train)
+# print('random forest train score: ', rf.score(X_train, y_train))
+# print('random forest test score: ', rf.score(X_test, y_test))
 
 # CATBOOST
-cb = CatBoostClassifier()
-print("training CatBoostClassifier")
-cb.fit(X_train, y_train, plot=False, logging_level='Silent')
-print('catboost score on train: ', cb.score(X_train, y_train))
-print('catboost score on test: ', cb.score(X_test, y_test))
+# cb = CatBoostClassifier()
+# print("training CatBoostClassifier")
+# cb.fit(X_train, y_train, plot=False, logging_level='Silent')
+# print('catboost score on train: ', cb.score(X_train, y_train))
+# print('catboost score on test: ', cb.score(X_test, y_test))
 
 # KNeighbors
-kn = KNeighborsClassifier()
-print("training KNeighborsClassifier")
-kn.fit(X_train, y_train)
-print('K neighbours score on train: ', kn.score(X_train, y_train))
-print('K neighbours on test: ', kn.score(X_test, y_test))
+# kn = KNeighborsClassifier()
+# print("training KNeighborsClassifier")
+# kn.fit(X_train, y_train)
+# print('K neighbours score on train: ', kn.score(X_train, y_train))
+# print('K neighbours on test: ', kn.score(X_test, y_test))
 
 # defining variables for CrossValidation
-n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
-max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
-bootstrap = [True, False]
-random_grid = {'n_estimators': n_estimators,
-               'max_depth': max_depth,
-               'bootstrap': bootstrap}
-
-rf_random = RandomizedSearchCV(estimator = rf,
-                               param_distributions = random_grid,
-                               n_iter = 50,
-                               cv = 3,
-                               verbose=2,
-                               random_state=42)
+# n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
+# max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+# bootstrap = [True, False]
+# random_grid = {'n_estimators': n_estimators,
+#                'max_depth': max_depth,
+#                'bootstrap': bootstrap}
+#
+# rf_random = RandomizedSearchCV(estimator = rf,
+#                                param_distributions = random_grid,
+#                                n_iter = 50,
+#                                cv = 3,
+#                                verbose=2,
+#                                random_state=42)
 
 # commented out to save time on next run
 # rf_random.fit(X_train, y_train)
@@ -106,5 +123,5 @@ print('random forest test score: ', rf.score(X_test, y_test))
 print("saving model to rock_paper_forests.joblib")
 joblib.dump(rf, 'rock_paper_forests.joblib')
 
-print("saving clean dataframe")
-df.to_csv('data/rock_paper_clean.csv', index=False)
+# print("saving clean dataframe")
+# df.to_csv('../data/rock_paper_clean.csv', index=False)
