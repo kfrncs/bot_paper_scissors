@@ -19,6 +19,8 @@ class KenBot:
         pass
 
     def predict(self):
+        # Get a prediction of what the player will throw
+        # using RandomForestsClassifier
         y = self.model.predict(self.df)
         # fetch last value from list of predictions
         y = y[-1]
@@ -26,8 +28,8 @@ class KenBot:
         return self.win_dict.get(y)
 
     def throw(self):
-        # x = self.model.predict(self.df)
-
+        # first 10 games are random, not from the model
+        # this is an issue that could be fixed with a different implementation
         if self.game_count < 10:
             x = random.choice([1, 2, 3])
             self.history['bot'].append(x)
@@ -60,14 +62,8 @@ class KenBot:
             'p1_-5': self.history['player'][-5],
             'p2_last': self.history['bot'][-2]
         }, index=[self.game_count])
-        print('append df: ', append_df)
-        # df[f'p1_-{i}'] = df.groupby('game_id')['player_one_throw'].shift(i)
 
         self.df = self.df.append(append_df, ignore_index=True)
-
-
-        # this is just for testing! probably remove me
-        self.df.to_csv('data/test.csv', index=False)
         return self
 
     def create_df(self):

@@ -24,6 +24,8 @@ def index():
         bot_throw = bot.throw()
 
         result = evaluate(player_throw, bot_throw)
+
+        # increases win/loss/tie, or creates them if they don't exist
         if result == 'win' and ('wins' in game):
             game['wins'] += 1
         elif result == 'win' and (not 'wins' in game):
@@ -37,6 +39,7 @@ def index():
         else:
             game['ties'] += 1
 
+        # Calculates win % if there is enough data
         if 'wins' in game and 'losses' in game and 'ties' in game:
             game['win_pct'] = game['wins'] / (game['wins'] + game['losses'] + game['ties'])
         elif 'wins' in game and 'losses' in game:
@@ -46,6 +49,10 @@ def index():
         else:
             game['win_pct'] = 0
 
+        # round the win %
+        game['win_pct'] = round((game['win_pct'] * 100), 2)
+
+        # pass results to the game dict for flask
         game['results'] = result
         game['player'] = num_to_words(player_throw)
         game['bot'] = num_to_words(bot_throw)
