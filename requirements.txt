@@ -1,1 +1,6 @@
-marky
+pandas
+numpy
+catboost
+sklearn
+joblib
+flask
