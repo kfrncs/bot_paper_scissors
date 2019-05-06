@@ -19,13 +19,11 @@ class KenBot:
         pass
 
     def predict(self):
-        print(f'predicting on {self.df}')
         y = self.model.predict(self.df)
+        # fetch last value from list of predictions
         y = y[-1]
         print(f"y is {y}")
-        # y = self.win_dict[y[0]]
-        # print(f"y after win_dict is {y}")
-        return y
+        return self.win_dict.get(y)
 
     def throw(self):
         # x = self.model.predict(self.df)

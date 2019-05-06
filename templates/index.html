@@ -11,7 +11,8 @@
 
     <div class="container-fluid">
     <br>
-      <p>choose wisely...</p>
+      <h5>Rock Paper Scissors: Random Forests Edition</h5>
+      <br>
       <!-- https://stackoverflow.com/a/19794878/3731467 -->
       <form method="POST" action="/">
         <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="🗿">
@@ -20,12 +21,21 @@
       </form>
     </div>
 
-    {% if game %}
+    {% if game['results'] %}
     <br>
     <div class="container-fluid">
       <p>you chose: <font color="red">{{ game['player'] }}</font></p>
-      <p>the AI chose: <font color="orange">{{ game['bot'] }}</font></p>
-      <p>outcome: <font color="blue">{{ game['result'] }}</font></p>
+      <p>the AI chose: {{ game['bot'] }}</p>
+      <p>outcome: {{ game['results'] }}</p>
+      <br>
+      <p>wins: <font color="blue">{{ game['wins'] }}</font></p>
+      <p>losses: <font color="red">{{ game['losses'] }}</font></p>
+      <p>ties: <font color="blue">{{ game['ties'] }}</font></p>
+    </div>
+    {% endif %}
+    {% if game['win_pct'] %}
+    <div class="container-fluid">
+      <p>win %: <font color="green">{{ game['win_pct'] }}</font></p>
     </div>
     {% endif %}
 

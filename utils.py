@@ -2,6 +2,10 @@ def emoji_to_num(emoji):
     lookup = {'🗿': 1, '📜': 2, '✂️': 3}
     return lookup.get(emoji)
 
+def num_to_words(num):
+    lookup = {1: 'rock', 2: 'paper', 3: 'scissors'}
+    return lookup.get(num)
+    
 def evaluate(player, computer):
     outcomes = {
         (1, 3): 'win',  # rock beats scissors
