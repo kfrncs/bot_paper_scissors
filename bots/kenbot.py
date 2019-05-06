@@ -28,18 +28,15 @@ class KenBot:
         return self.win_dict.get(y)
 
     def throw(self):
-        # first 10 games are random, not from the model
-        # this is an issue that could be fixed with a different implementation
+        # first 10 games are random, until DataFrame is populated
         if self.game_count < 10:
             x = random.choice([1, 2, 3])
-            self.history['bot'].append(x)
-            pass
+            self.history['bot'].append(x
         elif self.game_count == 10:
             x = random.choice([1, 2, 3])
             self.history['bot'].append(x)
             self.create_df()
             print('dataframe created')
-            pass
         else:
             print('Game count: ', self.game_count)
             x = self.predict()
@@ -47,7 +44,6 @@ class KenBot:
             self.append_turn()
             # print(bot.df)
             # x = bot.predict(bot.df) #
-            pass
         self.game_count += 1
 
         return x
