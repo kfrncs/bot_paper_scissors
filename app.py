@@ -58,5 +58,6 @@ def index():
         game['bot'] = num_to_words(bot_throw)
     return render_template('index.html', game=game)
 
+current_market = {}
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000', debug=True)

@@ -31,7 +31,7 @@ class KenBot:
         # first 10 games are random, until DataFrame is populated
         if self.game_count < 10:
             x = random.choice([1, 2, 3])
-            self.history['bot'].append(x
+            self.history['bot'].append(x)
         elif self.game_count == 10:
             x = random.choice([1, 2, 3])
             self.history['bot'].append(x)
